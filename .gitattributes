@@ -1,2 +1,537 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+package library_management_program;
+
+import java.util.*;
+import java.io.Serializable;
+
+public class BookList implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	//A couple of Books to Populate the "Library" 
+	  public Book M00001 = new Book(00001, "A Game of Thrones", "Martin", "Bantam Spectra", 3, 'A', true);
+	  public Book M00002 = new Book(00002, "A Clash of Kings", "Martin", "Bantam Spectra", 3, 'A',true);
+	  public Book M00003 = new Book(00003, "A Storm of Swords", "Martin", "Bantam Spectra", 3, 'A', true);
+	  public Book M00004 = new Book(00004, "A Feast of Crows", "Martin", "Bantam Spectra", 3, 'A', true);
+	  public Book M00005 = new Book(00005, "A Dance with Dragons", "Martin", "Bantam Spectra", 3, 'A', true);
+	  
+	
+	private List<Book> BookList; // will hold our "Library" of Books
+	
+	public BookList() {
+		
+		BookList = new ArrayList<Book>();
+		BookList.add(M00001);
+		BookList.add(M00002);
+		BookList.add(M00003);
+		BookList.add(M00004);
+		BookList.add(M00005);
+	}
+
+	public void addBookList(Book book) {
+		BookList.add(book);
+	
+	}
+	@Override
+	public String toString() {
+		String all = "\n" ; 
+			
+			for (int i=0; 1<BookList.size(); i++) {
+				Book bookobject = BookList.get(i);
+				all = all + bookobject.toString();
+			}
+			return all;
+		 
+		}
+	
+}
+
+
+
+
+
+
+package library_management_program;
+
+import java.util.*;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
+public class Book implements Serializable {
+
+	// Data Fields, or properties or attributes for the "Book" Object
+		
+		private int Isbn;
+		public String Title;
+		//public SimpleDateFormat date = new SimpleDateFormat("dd MM yyyy");
+		String pattern = "dd MM yyyy";
+		String date ;
+		public String AuthLast;
+		public String Publisher;
+		public int Isle ;
+		public char Shelf;
+		boolean BookInStock;
+		
+	// Constructors 
+		
+		public Book (int i, String string, String string2, String string3, String string4, int j, char c, boolean b) {   // The Default "Book Object"
+			Isbn = 0;
+			Title = null;
+			date = new SimpleDateFormat(pattern).format(new Date());
+			AuthLast = null;
+			Publisher = null;
+			Isle = 0;
+			Shelf = 0;
+			BookInStock = true;
+		}
+			
+		 
+
+		public Book(int i, String string, String string2, String string3, int j, char c, boolean e) {
+		}
+
+		public void addBook(int newIsbn, String newTitle, String newDate, String newAuthLast, 
+					 String newPublisher, int newIsle, char newShelf, boolean newBookInStock){ 
+			System.out.println("\nEnter ISBN:  ");
+				Isbn = newIsbn;
+			System.out.println("\nEnter Title:  ");			  
+				Title = newTitle;
+			System.out.println("\nEnter Date Book was Checked out(dd mm yyyy) (null if otherwise):  ");	
+				date = newDate;
+			System.out.println("\nEnter Author Last Name:  ");	
+				AuthLast = newAuthLast;
+		    System.out.println("\nEnter Publisher:  ");	
+				Publisher = newPublisher;
+		    System.out.println("\nEnter Isle where Book is Located:  ");	
+				Isle = newIsle;
+			System.out.println("\nEnter Shelf where Book is Located:  ");	
+				Shelf = newShelf;
+			System.out.println("\nIs Book in Stock (true or false):  ");	
+				BookInStock = newBookInStock;
+		  }
+		    
+		 //A couple of Books to Populate the "Library" Used if addBookList Method is Used
+		  public static Book M00001 = new Book(00001, "A Game of Thrones","04 05 2019", "Martin", "Bantam Spectra", 3, 'A', true);
+		  public static Book M00002 = new Book(00002, "A Clash of Kings","01 05 2019", "Martin", "Bantam Spectra", 3, 'A',true);
+		  public static Book M00003 = new Book(00003, "A Storm of Swords","10 04 2019", "Martin", "Bantam Spectra", 3, 'A', true);
+		  public static Book M00004 = new Book(00004, "A Feast of Crows","25 04 2019", "Martin", "Bantam Spectra", 3, 'A', true);
+		  public static Book M00005 = new Book(00005, "A Dance with Dragons","17 04 2019", "Martin", "Bantam Spectra", 3, 'A', true);
+		  
+		  //void addBookList(Book M00001, Book M00002) {
+		//}
+			
+	// Methods
+		   @Override
+		  public String toString() {
+			  return "\nIsbn" + Isbn + "\nTitle" + Title + "\ndatecheckedout" + 
+		  date + "\nAuthLast" + AuthLast + "\nPublisher" + Publisher + 
+		  "\nbookpublished" + "\nIsle" + Isle + "\nShelf" + Shelf;
+		  } 
+		  
+		  public long getIsbn() {
+			  return Isbn;
+		  }
+		  
+		  public String getTitle(){
+			  return Title;
+		  }
+		  
+		  public String getdatecheckedout() {
+			  return date;
+		  }
+		
+		  public String getAuthLast() {
+			  return AuthLast;
+		  }
+		
+		  public String getPublisher() {
+			  return Publisher; 
+		  }
+			  
+		  public int getIsle() {
+			  return Isle; 
+		  }
+		  
+		  public int getShelf() {
+			  return Shelf; 
+		  }
+		  
+		  //setters
+		  
+		  public void setdatecheckedout(String newDate) {
+			   date = newDate;
+		  }
+
+	}
+
+
+
+
+
+
+package library_management_program;
+
+	import java.util.Date;
+	import java.util.InputMismatchException;
+	import java.text.ParseException;
+	import java.text.SimpleDateFormat;
+	import java.util.Scanner;
+
+
+	public class Check_in_Book {
+
+		static String fileName = null;
+		static BookList library = new BookList();
+		static Scanner scanner = new Scanner(System.in);
+		
+		public static void main(String[] args) throws ParseException {
+
+			String book_num;
+			boolean end = false;
+			SimpleDateFormat bookdate = new SimpleDateFormat("dd MM yyyy");
+			SimpleDateFormat DateToday = new SimpleDateFormat("dd MM yyyy");
+			String dateCheckedOut; //attribute of the book object
+
+			
+	//This while loop should end when all books have been turned in
+	//a user dicated "end" should be implemented
+			while(end == false) {
+				boolean continueInput = true;    
+			    
+			   	do {
+			   	try {
+			   	//this will need exception handling, for non integer inputs and out of book range inputs
+			    	System.out.println("Type in book Serial Number: ex. M00004 "); 
+					book_num = "M00001";
+					//Using Method Call to Book Class this will "populate" date checked out
+					continueInput = false;
+			    }
+			    catch (InputMismatchException ex) {
+			    	System.out.println("Try again, int 4 Digits: ####");
+			    	scanner.nextLine();
+			    	}
+			    }while (continueInput);
+			    
+			   	
+			   	continueInput = true;
+			   	do {
+			   		try {
+			    	dateCheckedOut = Book.M00002.getdatecheckedout();
+			    	
+					String pattern = "dd MM yyyy";
+			    	String dateTurnedIn = new SimpleDateFormat(pattern).format(new Date());
+			    	System.out.println(dateTurnedIn);
+			    	
+			    	Date dateBefore = bookdate.parse(dateCheckedOut);
+			    	Date dateAfter = bookdate.parse(dateTurnedIn);
+			    	System.out.println(dateCheckedOut);
+			    	
+			    	long difference = dateAfter.getTime() - dateBefore.getTime();
+			    	float daysBetween = (difference / (1000*60*60*24));
+			    	System.out.println(daysBetween);
+			        if (daysBetween < 21 ) {
+			    	 System.out.println("Book is on time, place in bin");
+			     }
+			     else if (daysBetween > 21) {
+			    	System.out.println("Book is late, place in bin \n");
+	    	 
+			     }
+			   	}	
+			    finally {
+			    	continueInput = false;
+			        }
+			}while (continueInput);
+		}
+		}
+	}
+  
+  
+  
+  
+  
+
+package library_management_program;
+
+	import java.util.Date;
+	import java.util.InputMismatchException;
+	import java.text.ParseException;
+	import java.text.SimpleDateFormat;
+	import java.util.Scanner;
+
+
+	public class Check_out_Book {
+
+		static String fileName = null;
+		static BookList library = new BookList();
+		static Scanner scanner = new Scanner(System.in);
+		
+		public static void main(String[] args) throws ParseException {
+
+			String book_num;
+			boolean continueInput = false;
+
+			
+	//This while loop should end when all books have been turned in
+	//a user dicated "end" should be implemented
+			while(continueInput == false) {
+				
+				
+				 continueInput = true;    
+			    do {
+					System.out.println("This Library Funtion will Check Out a Book to a Student"
+							+ "\nWould you like to Continue? (2)No");
+					int userinput = scanner.nextInt();
+					if(userinput == 2 ) {
+						System.out.println("Terminating Program...");
+					continueInput = false;
+					}
+					
+					
+					else {	
+						System.out.println("Type in book to be checked out Serial Number: ex. 123456");
+						book_num = scanner.nextLine();
+				String pattern = "dd MM yyyy";
+		    	String datecheckedout = new SimpleDateFormat(pattern).format(new Date());
+
+		    	Book.M00002.setdatecheckedout(datecheckedout);
+		    				 				
+				   		String student_checking_out_book;
+				    	System.out.println("Type in Student Checking out Book (ex. S0001, see Library ID):  "); 
+						student_checking_out_book = scanner.nextLine();
+						
+						Student.S00002.addBooks_Rented(book_num);
+				   	
+					}	   	
+			    }while (continueInput);
+	}
+		}
+		}
+	
+	
+  
+  
+  
+  
+  
+  
+package library_management_program;
+
+import java.io.*;
+import java.util.*;
+
+public class Show_Library {
+	static String fileName;
+	static BookList booklist;
+	static Scanner scanner = new Scanner(System.in);
+	static Boolean end = false;
+	
+	public static void main(String[] args) throws IOException {
+	
+		
+		while(end==false) {
+			System.out.println("This Library Funtion will Show Library contents"
+					+ "\nWould you like to Continue? (1)Yes or (2)No");
+			int userinput = scanner.nextInt();
+			
+			if (userinput == 1) {
+				System.out.print("this works");
+				File file = new File(fileName);
+				FileInputStream fileinput = null;
+				try {
+					fileinput = new FileInputStream(file);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				ObjectInputStream objectinput = null;
+				try {
+					objectinput = new ObjectInputStream(fileinput);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					booklist = (BookList) objectinput.readObject();
+				} catch (ClassNotFoundException | IOException e) {
+					e.printStackTrace();
+				}
+				fileinput.close();
+				objectinput.close();
+								
+			}
+			else if (userinput == 2) {
+				System.out.println("Terminating Program...");
+				System.exit(0);
+				end=true;
+			}
+			else {
+				System.out.println("Please input a '1' for yes or a '2' for no");
+			}
+				
+				
+		}
+	}
+}
+
+
+
+
+
+
+
+package library_management_program;
+
+import java.util.*;
+import java.io.Serializable;
+
+public class StudentList implements Serializable {
+	
+	  public Student S00001 = new Student(00001, "Snow", "John", "jsnow@email.com", 998, 9980998, "M00001");
+	  public Student S00002 = new Student(00001, "Eggar", "Targaryan", "eTargaryan@email.com", 998, 9980998, "M00001");
+	  public Student S00003 = new Student(00001, "Bran", "TheBuilder", "BranBuilder@email.com", 998, 9980998, "M00001");
+	  public Student S00004 = new Student(00001, "Aegar", "Targaryan", "aTargaryan@email.com", 998, 9980998, "M00001");
+	  public Student S00005 = new Student(00001, "Robert", "Baratheon", "rBaratheon@email.com", 998, 9980998, "M00001");
+	
+	private List<Student> StudentList; // will hold our "Library" of Books
+	
+	public StudentList() {
+		
+		StudentList = new ArrayList<Student>();
+		StudentList.add(S00001);
+		StudentList.add(S00002);
+		StudentList.add(S00003);
+		StudentList.add(S00004);
+		StudentList.add(S00005);
+	}
+
+	public void addStudentList(Student student) {
+		StudentList.add(student);
+	
+	}
+	@Override
+	public String toString() {
+		String all = "\n" ; 
+			
+			for (int i=0; 1<StudentList.size(); i++) {
+				Student studentobject = StudentList.get(i);
+				all = all + studentobject.toString();
+			}
+				
+		return all; 
+		}
+}
+
+
+
+
+
+
+package library_management_program;
+
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+		public int Student_id;
+		public String Last_Name;
+		public String First_Name;
+		public String Email;
+		public int Area_Code;
+		public long Phone_Num;
+		public String Books_Rented = null;
+		
+		public Student() {
+			Student_id = 0123456;
+			Last_Name = "Doe";
+			First_Name = "John";
+			Email = "JohnDoe@email.com";
+			Area_Code = 860;
+			Phone_Num = 6944444;
+		}
+		
+
+		 public void setstudent(int newStudent_id, String newLast_Name, String newFirst_Name,
+			String newEmail, int newArea_Code, int newPhone_Num, String newBook_Rented)
+	{ //to invoke a student you must have these fields
+
+		Student_id = newStudent_id;
+		Last_Name = newLast_Name;
+		First_Name = newFirst_Name;
+		Email = newEmail;
+		Area_Code = newArea_Code;
+		Phone_Num = newPhone_Num;
+		Books_Rented = newBook_Rented;
+		
+	  }
+	  
+	  
+		public Student(int i, String string, String string2, String string3, int j, int c, String string4) {
+		}
+
+		public void addStudent(int newStudent_id, String newLast_Name,String newFirst_Name, String newEmail, 
+					 int newArea_Code, int newPhone_Num, String newBook_Rented ){ 
+			System.out.println("\nEnter ISBN:  ");
+			Student_id = newStudent_id;
+			System.out.println("\nEnter Tittle:  ");			  
+			Last_Name = newLast_Name;
+			System.out.println("\nEnter Author Last Name:  ");	
+			First_Name = newFirst_Name;
+		    System.out.println("\nEnter Publisher:  ");	
+		    Area_Code = newArea_Code;
+		    System.out.println("\nEnter Isle where Book is Located:  ");	
+		    Phone_Num = newPhone_Num;
+			System.out.println("\nEnter Shelf where Book is Located:  ");	
+			Books_Rented = newBook_Rented;
+		  }
+		    
+		 //A couple of Students to Populate the "Student List" Used if addStudentList Method is Used
+		  public static Student S00001 = new Student(00001, "Snow", "John", "jsnow@email.com", 998, 9980998, "M00001");
+		  public static Student S00002 = new Student(00001, "Eggar", "Targaryan", "eTargaryan@email.com", 998, 9980998, "M00001");
+		  public static Student S00003 = new Student(00001, "Bran", "TheBuilder", "BranBuilder@email.com", 998, 9980998, "M00001");
+		  public static Student S00004 = new Student(00001, "Aegar", "Targaryan", "aTargaryan@email.com", 998, 9980998, "M00001");
+		  public static Student S00005 = new Student(00001, "Robert", "Baratheon", "rBaratheon@email.com", 998, 9980998, "M00001");
+			  
+		  //void addStudentList(Student M00001, Book M00002) {
+		//}
+		
+	// Methods
+	   @Override
+	  public String toString() {
+		  return "\nStudent_ID: " + Student_id + "\nLast Name: " + Last_Name + "\nEmail: " + 
+	  Email + "\nPhone Number: " + Area_Code + " -" + Phone_Num;}
+	  
+	  public int getStudent_id() {
+		  return Student_id;
+	  }
+	  
+	  public String getLast_Name(){
+		  return Last_Name;
+	  }
+	  
+	  public String getFirst_Name() {
+		  return First_Name;
+	  }
+
+	  public String getEmail() {
+		  return Email;
+	  }
+
+	  public int getArea_Code() {
+		  return Area_Code; 
+	  }
+	  
+	  public long getPhone_Number() {
+		  return Phone_Num; 
+	  }
+	  
+	  //setters
+	  
+	  public void addBooks_Rented(String Book) {
+		   Books_Rented = Books_Rented + Book;
+	  }
+
+	  
+	}
+
+
+		 
+		
+	
